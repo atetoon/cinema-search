@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cinema</title>
+</head>
+<body>
+    <div id="poster-style"></div>
+
+    <div class="landing-container">
+        <div class="heading-cntnr">
+            <div class="logo">
+                <h5>Cinéma</h5>
+            </div>
+            <div class="title">
+                <h2>Discover</h2>
+                <h2>any film.</h2>
+                <p>Posters · Cast · Ratings · More</p>
+            </div>
+        </div>
+
+        <div class="search-cntnr">
+            <div class="search-section">
+                <input type="text" class="searchBar" placeholder="Search a movie title..." maxlength="20">
+                <button id="searchBtn">SEARCH</button>
+            </div>
+            <p>
+                Try:
+                <span class="suggestion">Inception</span>
+                <span> · </span>
+                <span class="suggestion">Dune</span>
+                <span> · </span>
+                <span class="suggestion">Interstellar</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="movie-container hidden">
+        <div class="navbar">
+            <button id="backBtn">BACK</button>
+            <div class="navLogo">Cinéma</div>
+            <div class="navText">OMDB</div>
+        </div>
+        <div class="movie-details">
+            <div class="left-movie-detail">
+                <div class="left-poster"></div>
+                <div class="rating-box">
+                <span id="ratings"></span>
+                </div>
+            </div>
+
+            <div class="right-movie-detail">
+                <div class="movie-description">
+                    <p id="genre"></p>
+                    <p id="title"></p>
+                    <p id="mini-details"></p>
+                    <p id="description"></p>
+                </div>
+            </div>
+
+            <div class="display-grid">
+                <div class="display-cell">
+                    <span>DIRECTOR</span>
+                    <p id="director"></p>
+                </div>
+                <div class="display-cell">
+                    <span>RELEASED</span>
+                    <p></p>
+                </div>
+                <div class="display-cell">
+                    <span>COUNTRY</span>
+                    <p></p>
+                </div>
+                <div class="display-cell">
+                    <span>LANGUAGE</span>
+                    <p></p>
+                </div>
+                <div class="display-cell">
+                    <span>WRITER</span>
+                    <p></p>
+                </div>
+                <div class="display-cell">
+                    <span>ACTORS</span>
+                    <p></p>
+                </div>
+                <div class="display-cell">
+                    <span>AWARDS</span>
+                    <p></p>
+                </div>
+                <div class="display-cell">
+                    <span>BOX OFFICE</span>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

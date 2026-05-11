@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --backgrd-clr : #080808;
+}
+
+body{
+    background: var(--backgrd-clr);
+    color: white;
+    
+}
+
+.hidden{
+    display: none;
+}
+
+#poster-style{
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    z-index: -1;
+    filter: blur(2px) brightness(0.3);
+}
+
+.left-poster img{
+    width: 100%;
+    max-width: 200px;
+    border-radius: 3px;
+}
