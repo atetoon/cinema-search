@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -5,12 +7,16 @@
 
 :root{
     --backgrd-clr : #080808;
+    --font-sans : "DM Sans", sans-serif;
+    --font-cormorant : "Cormorant Garamond", serif;
+
 }
 
 body{
     background: var(--backgrd-clr);
     color: white;
-    
+    font-family: var(--font-sans);
+    font-weight: 400;
 }
 
 .hidden{
@@ -31,4 +37,79 @@ body{
     width: 100%;
     max-width: 200px;
     border-radius: 3px;
+}
+
+.landing-container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading-cntnr{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title{
+    text-align: center;
+}
+
+.title h2{
+    font-family: var(--font-cormorant);
+    font-weight: 300;
+    font-size: clamp(36px, 10vw, 52px);
+}
+
+.title p{
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.cgItalic{
+    font-family: var(--font-cormorant);
+    font-style: italic;
+}
+
+.logo h5{
+    font-size: 0.65rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.search-cntnr{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* search Bar */
+
+input{
+    font-size: 1rem;
+    font-family: var(--font-cormorant);
+    font-weight: 300;
+}
+
+input::placeholder{
+    font-family: var(--font-cormorant);
+    font-style: italic;
+    font-weight: 300;
+}
+
+#searchBtn{
+    font-family: var(--font-cormorant);
+    font-size: 0.75rem;
+}
+
+/* suggestions */
+
+.suggestionSpan span{
+    font-size: 0.75rem;
+    word-spacing: 12px;
 }
