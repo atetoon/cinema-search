@@ -29,7 +29,8 @@ let movie;
 
 function searchHandler(){
     movieName = searchBar.value;
-    fetchMovie(movieName);
+    if(movieName !== "")
+        fetchMovie(movieName);
 }
 
 searchBtn.addEventListener("click", ()=>{
@@ -110,6 +111,7 @@ function movieDetails(){
 
 function errorMsgFunc(){
     let errorMsg = document.createElement("p");
+    errorMsg.classList.add("errorMsg");
     errorMsg.innerText = `${searchBar.value} not found. Double-check the title and try again.`;
     searchSection.after(errorMsg);
 }
