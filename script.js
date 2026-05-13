@@ -50,7 +50,7 @@ suggestion.forEach(span =>{
 });
 
 async function fetchMovie(movieName){
-    let result = await fetch(`https://www.omdbapi.com/?apikey=e3120137&t=${movieName}`);
+    let result = await fetch(`https://www.omdbapi.com/?apikey=e3120137&t=${movieName}&plot=full`);
     movie = await result.json();
     if(movie.Response==="True")
         renderMovie(movie);
