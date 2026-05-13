@@ -6,7 +6,8 @@ let movieContainer = document.querySelector(".movie-container");
 let posterStyle = document.querySelector("#poster-style");
 let suggestion = document.querySelectorAll(".suggestion");
 let leftPoster = document.querySelector(".left-poster");
-let ratings = document.querySelector("#ratings");
+let ratingSpan = document.querySelector("#ratingSpan");
+let votingSpan = document.querySelector("#votingSpan");
 let genre = document.querySelector("#genre");
 let movieTitle = document.querySelector("#title");
 let miniDetails = document.querySelector("#mini-details");
@@ -88,7 +89,9 @@ function movieDetails(){
     img.alt = `${movie.Title} Poster`
     leftPoster.appendChild(img);
 
-    ratings.innerText = `★ ${movie.imdbRating} /10 (${movie.imdbVotes})`;
+    ratingSpan.innerText = `${movie.imdbRating}`;
+    votingSpan.innerText = `(${movie.imdbVotes})`;
+
 
     genre.innerText = `${movie.Genre}`;
     movieTitle.innerText = `${movie.Title}`;
