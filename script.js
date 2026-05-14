@@ -21,6 +21,7 @@ let actors = document.querySelector("#actors");
 let awards = document.querySelector("#awards");
 let boxOffice = document.querySelector("#box-office");
 let searchSection = document.querySelector(".search-section");
+let loadingScreen = document.querySelector(".loading-screen");
 
 let img = document.createElement("img");
 
@@ -52,15 +53,20 @@ suggestion.forEach(span =>{
 });
 
 async function fetchMovie(movieName){
+    hideLanding();
+    loadingScreen.classList.remove("hidden");
     let result = await fetch(`https://www.omdbapi.com/?apikey=e3120137&t=${movieName}&plot=full`);
     movie = await result.json();
+    loadingScreen.classList.add("hidden");
     if(movie.Response==="True")
         renderMovie(movie);
-    else errorMsgFunc();
+    else{
+        errorMsgFunc();
+        showLanding();
+    }
 }
 
 function renderMovie(movie){
-    hideLanding();
     movieDetails();
 }
 

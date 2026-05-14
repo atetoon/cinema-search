@@ -32,7 +32,7 @@ body{
 #poster-style{
     position: fixed;
     inset: 0;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center top;
     z-index: -1;
@@ -281,6 +281,8 @@ input::placeholder{
     margin-bottom: 1.75rem;
 }
 
+
+
 /* DISPLAY GRID SECTION */
 .display-grid{
     display: grid;
@@ -319,13 +321,45 @@ input::placeholder{
     display: none;
 }
 
+/* Loading screen */
+.loading-screen{
+    display: flex;
+    justify-content: center;
+    min-height: 100svh;
+    align-items: center;
+}
+
+.loading-box{
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    transform: translatey(-50%);
+    align-items: center;
+}
+
+.spinner{
+    width: 35px;
+    height: 35px;
+    border: 2px solid rgba(201, 185, 154, 0.25);
+    border-top: 2px solid var(--color-gold);
+    border-radius: 50%;
+
+    animation: spinning 1s linear infinite;
+}
+
+.loading-box p{
+    color: rgba(201, 185, 154, 0.378);
+    letter-spacing: 5px;
+    font-size: 0.75rem;
+}
+
+@keyframes spinning{
+    0% {transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
+
 /* RESPONSIVE */
 
-@media (min-width: 435px){
-    #poster-style{
-    background-size: cover;
-    }
-}
 
 @media (min-width: 700px){
 
@@ -339,7 +373,7 @@ input::placeholder{
 
 }
 
-/* ANIMATION */
+
 /* suggestion */
 
 .suggestion:hover{
