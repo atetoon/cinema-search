@@ -321,6 +321,12 @@ input::placeholder{
 
 /* RESPONSIVE */
 
+@media (min-width: 435px){
+    #poster-style{
+    background-size: cover;
+    }
+}
+
 @media (min-width: 700px){
 
     .movie-details{
