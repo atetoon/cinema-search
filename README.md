@@ -3,8 +3,6 @@
 Cinéma is a cinematic movie discovery web application that combines the power of OMDb and TMDB APIs. Search for any movie or discover a random title by genre, with detailed information, dynamic backdrops, and an elegant minimalist interface.
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-00C853?style=for-the-badge&logo=vercel&logoColor=white)](https://cinema-search-two.vercel.app)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/atetoon/cinema-search)
-
 
 ---
 
