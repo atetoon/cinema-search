@@ -1,5 +1,7 @@
 let searchBar = document.querySelector(".searchBar");
 let searchBtn = document.querySelector("#searchBtn");
+let genreSelect = document.querySelector("#genreSelect");
+let randomBtn = document.querySelector("#randomBtn");
 let backBtn = document.querySelector("#backBtn");
 let landingContainer = document.querySelector(".landing-container");
 let movieContainer = document.querySelector(".movie-container");
@@ -35,8 +37,24 @@ function searchHandler(){
         fetchMovie(movieName);
 }
 
+async function loadGenres() {
+    try {
+        const genres = await getGenres();
+        populateGenres(genres);
+    } catch (error) {
+        console.error(error);
+        showError("Unable to load genres.");
+    }
+}
+
+loadGenres();
+
 searchBtn.addEventListener("click", ()=>{
     searchHandler();
+});
+
+randomBtn.addEventListener("click", () => {
+    randomMovieHandler();
 });
 
 searchBar.addEventListener("keydown", (e)=>{
@@ -53,23 +71,43 @@ suggestion.forEach(span =>{
     });
 });
 
-async function fetchMovie(movieName){
-    landingContainer.classList.add("hidden");
-    loadingScreen.classList.remove("hidden");
-    let result = await fetch(`https://www.omdbapi.com/?apikey=e3120137&t=${movieName}&plot=full`);
-    movie = await result.json();
-    loadingScreen.classList.add("hidden");
-    if(movie.Response==="True")
+async function fetchMovie(movieName) {
+    try {
+        errorMsgDeletion();
+        showLoading();
+        movie = await searchMovie(movieName);
+        movie.backdrop = await getBackdrop(movie.Title, movie.Year);
+        hideLoading();
         renderMovie(movie);
-    else{
+    } catch (error) {
+        hideLoading();
         errorMsgFunc();
         showLanding();
     }
 }
 
+async function randomMovieHandler() {
+    try {
+        document.activeElement.blur();
+        showLoading();
+        const genreID = genreSelect.value;
+        const randomMovie = await getRandomMovieByGenre(genreID);
+        const imdbID = await getIMDbID(randomMovie.id);
+        movie = await getMovieByIMDb(imdbID);
+        movie.backdrop = randomMovie.backdrop_path;
+        hideLoading();
+        renderMovie(movie);
+    }
+    catch(error){
+        hideLoading();
+        showError(error.message);
+    }
+}
+
 function renderMovie(movie){
-    movieContainer.classList.remove("hidden");
-    movieDetails();
+    showMoviePage();
+    leftPoster.innerHTML = "";
+    movieDetails(movie);
 }
 
 
@@ -86,8 +124,11 @@ backBtn.addEventListener("click", ()=>{
     showLanding();
 });
 
-function movieDetails(){
-    posterStyle.style.backgroundImage = `url(${movie.Poster})`;
+function movieDetails(movie){
+    if(movie.backdrop){
+        posterStyle.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${movie.backdrop})`;
+    } else{ posterStyle.style.backgroundImage = `url(${movie.Poster})`;
+        }
 
     img.src = `${movie.Poster}`
     img.alt = `${movie.Title} Poster`

@@ -3,31 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinéma</title>
+
     <link rel="stylesheet" href="style.css">
-    <title>Cinema</title>
 </head>
 <body>
+
+    <!-- Dynamic Background -->
     <div id="poster-style"></div>
 
+    <!--  LANDING PAGE  -->
+
     <div class="landing-container">
+
         <div class="heading-cntnr">
+
             <div class="logo">
                 <h5>Cinéma</h5>
             </div>
+
             <div class="title">
                 <div class="discover-container">
-                <h2>Discover</h2>
-                <h2 class="cgItalic">any film.</h2>
+                    <h2>Discover</h2>
+                    <h2 class="cgItalic">any film.</h2>
                 </div>
+
                 <p>Posters · Cast · Ratings · More</p>
             </div>
+
         </div>
 
+        <!-- SEARCH -->
+
         <div class="search-cntnr">
+
             <div class="search-section">
-                <input type="text" class="searchBar" placeholder="Search a movie title..." maxlength="40">
-                <button id="searchBtn">SEARCH</button>
+                <input
+                    type="text"
+                    class="searchBar"
+                    placeholder="Search a movie title..."
+                    maxlength="40"
+                >
+
+                <button id="searchBtn">
+                    SEARCH
+                </button>
             </div>
+
             <p class="suggestionSpan">
                 Try:
                 <span class="suggestion">Inception</span>
@@ -36,82 +58,178 @@
                 <span class="dot">·</span>
                 <span class="suggestion">Interstellar</span>
             </p>
-        </div>
-    </div>
 
-    <div class="loading-screen hidden">
-        <div class="loading-box">
-            <div class="spinner"></div>
-            <p>FETCHING</p>
         </div>
-    </div>
 
-    <div class="movie-container hidden">
-        <div class="navbar">
-            <button id="backBtn">← BACK</button>
-            <p class="navLogo">Cinéma</p>
-            <p class="navText">OMDB</p>
+        <!-- DIVIDER -->
+
+        <div class="divider">
+            <span></span>
+            <p>OR</p>
+            <span></span>
         </div>
-        <div class="movie-details">
-            <div class="left-movie-detail">
-                <div class="left-poster"></div>
-                <div class="rating-box">
-                <span id="ratings">
-                    <span>★ </span>
-                    <span id="ratingSpan"></span>
-                    <span class="rateStyles"> /10 </span>
-                    <span id="votingSpan" class="rateStyles"></span>
-                </span>
-                </div>
+
+        <!-- RANDOM DISCOVERY -->
+
+        <div class="discover-random">
+
+            <p class="discover-heading">
+                Discover by Genre
+            </p>
+
+            <div class="random-controls">
+
+                <select id="genreSelect">
+                    <option selected disabled>
+                        Loading genres...
+                    </option>
+                </select>
+
+                <button id="randomBtn">
+                    RANDOM FILM
+                </button>
+
             </div>
 
-            <div class="right-movie-detail">
-                <div class="movie-description">
-                    <p id="genre"></p>
-                    <p id="title"></p>
-                    <p id="mini-details"></p>
-                    <p id="description"></p>
+        </div>
+
+    </div>
+
+    <!-- LOADING  -->
+
+    <div class="loading-screen hidden">
+
+        <div class="loading-box">
+
+            <div class="spinner"></div>
+
+            <p>FETCHING</p>
+
+        </div>
+
+    </div>
+
+    <!-- MOVIE DETAILS  -->
+
+    <div class="movie-container hidden">
+
+        <div class="navbar">
+
+            <button id="backBtn">
+                ← BACK
+            </button>
+
+            <p class="navLogo">
+                Cinéma
+            </p>
+
+            <p class="navText">
+                OMDb
+            </p>
+
+        </div>
+
+        <div class="movie-details">
+
+            <!-- LEFT -->
+
+            <div class="left-movie-detail">
+
+                <div class="left-poster"></div>
+
+                <div class="rating-box">
+
+                    <span id="ratings">
+
+                        <span>★ </span>
+
+                        <span id="ratingSpan"></span>
+
+                        <span class="rateStyles">
+                            /10
+                        </span>
+
+                        <span
+                            id="votingSpan"
+                            class="rateStyles">
+                        </span>
+
+                    </span>
+
                 </div>
-            
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="right-movie-detail">
+
+                <div class="movie-description">
+
+                    <p id="genre"></p>
+
+                    <p id="title"></p>
+
+                    <p id="mini-details"></p>
+
+                    <p id="description"></p>
+
+                </div>
 
                 <div class="display-grid">
+
                     <div class="display-cell">
                         <span>DIRECTOR</span>
                         <p id="director"></p>
                     </div>
+
                     <div class="display-cell">
                         <span>RELEASED</span>
                         <p id="released"></p>
                     </div>
+
                     <div class="display-cell">
                         <span>COUNTRY</span>
                         <p id="country"></p>
                     </div>
+
                     <div class="display-cell">
                         <span>LANGUAGE</span>
                         <p id="language"></p>
                     </div>
+
                     <div class="display-cell">
                         <span>WRITER</span>
                         <p id="writer"></p>
                     </div>
+
                     <div class="display-cell">
                         <span>ACTORS</span>
                         <p id="actors"></p>
                     </div>
+
                     <div class="display-cell">
                         <span>AWARDS</span>
                         <p id="awards"></p>
                     </div>
+
                     <div class="display-cell">
                         <span>BOX OFFICE</span>
                         <p id="box-office"></p>
                     </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
+    <!-- Scripts -->
+
+    <script src="helpers.js"></script>
     <script src="script.js"></script>
+
 </body>
 </html>
