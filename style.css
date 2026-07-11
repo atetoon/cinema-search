@@ -78,7 +78,7 @@ body{
     line-height: 4;
 }
 
-.title h2{
+.title h1{
     font-family: var(--font-cormorant);
     font-weight: 300;
     font-size: clamp(36px, 10vw, 52px);
