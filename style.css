@@ -70,8 +70,7 @@ body{
     gap: 1.75rem;
 }
 
-/* Discover any film */
-/* Posters · Cast · Ratings · More */
+
 
 .title{
     text-align: center;
@@ -104,7 +103,6 @@ body{
     color: var(--color-gold) !important;
 }
 
-/* cinema */
 
 .logo h5{
     font-size: 0.65rem;
@@ -114,7 +112,7 @@ body{
     color: var(--color-general);
 }
 
-/* suggestions */
+
 
 .suggestionSpan{
     font-size: 0.75rem;
@@ -133,7 +131,6 @@ body{
     margin: 0 8px;
 }
 
-/* SearchBar and Search */
 
 
 .search-cntnr{
@@ -179,7 +176,7 @@ input::placeholder{
     letter-spacing: 2px;
 }
 
-/* error msg */
+
 
 .errorMsg{
     color: #c0614a;
@@ -187,7 +184,7 @@ input::placeholder{
     margin-bottom: 0.5rem;
 }
 
-/* MOVIE CONTAINER */
+
 .movie-container{
     user-select: none;
 }
@@ -196,7 +193,7 @@ input::placeholder{
     padding: 2rem 1.25rem 3rem;
 }
 
-/* Navbar */
+
 .navbar{
     display: flex;
     align-items: center;
@@ -230,7 +227,6 @@ input::placeholder{
 }
 
 
-/* POSTER AND RATING */
 .left-movie-detail{
     display: flex;
     flex-direction: column;
@@ -258,7 +254,7 @@ input::placeholder{
     margin-left: 2px;
 }
 
-/* DESCRIPTION */
+
 #genre{
     text-transform: uppercase;
     color: var(--color-gold);
@@ -296,7 +292,7 @@ input::placeholder{
 
 
 
-/* DISPLAY GRID SECTION */
+
 .display-grid{
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -334,7 +330,7 @@ input::placeholder{
     display: none;
 }
 
-/* Loading screen */
+
 .loading-screen{
     display: flex;
     justify-content: center;
@@ -368,7 +364,6 @@ input::placeholder{
     font-size: 0.75rem;
 }
 
-/*DISCOVER BY GENRE */
 
 .divider{
     width: min(520px,100%);
@@ -413,7 +408,7 @@ input::placeholder{
     gap: 0.75rem;
 }
 
-/* Genre Select */
+
 
 #genreSelect{
     flex: 1;
@@ -447,7 +442,7 @@ input::placeholder{
     border-color: var(--color-gold);
 }
 
-/* Random Button */
+
 
 #randomBtn{
     font-size: 0.60rem;
@@ -461,14 +456,14 @@ input::placeholder{
     color: black;
 } */
 
-/* Buttons */
+
 
 #searchBtn,
 #randomBtn{
     font-family: var(--font-sans);
 }
 
-/* Desktop */
+
 
 @media (max-width:700px){
 
@@ -483,7 +478,7 @@ input::placeholder{
 
 }
 
-/* Small UX improvements */
+
 
 button{
     transition:
@@ -507,7 +502,7 @@ input, select{
         background-color .25s;
 }
 
-/* Scrollbar */
+
 
 ::-webkit-scrollbar{
     width: 8px;
@@ -531,7 +526,7 @@ input, select{
     100%{transform: rotate(360deg);}
 }
 
-/* RESPONSIVE */
+
 
 
 @media (min-width: 700px){
@@ -560,7 +555,6 @@ input, select{
 
 }
 
-/* suggestion */
 
 .suggestion:hover{
     color: var(--color-gold);
