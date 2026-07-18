@@ -25,6 +25,12 @@ let awards = document.querySelector("#awards");
 let boxOffice = document.querySelector("#box-office");
 let searchSection = document.querySelector(".search-section");
 let loadingScreen = document.querySelector(".loading-screen");
+let trailerBtn = document.querySelector("#trailerBtn");
+let trailerModal = document.querySelector("#trailerModal");
+let trailerFrame = document.querySelector("#trailerFrame");
+let closeTrailerBtn = document.querySelector("#closeTrailerBtn");
+let watchSection = document.querySelector("#watchSection");
+let watchGrid = document.querySelector("#watchGrid");
 
 let img = document.createElement("img");
 
@@ -76,8 +82,17 @@ async function fetchMovie(movieName) {
     try {
         errorMsgDeletion();
         showLoading();
+        const start = Date.now();
+
         movie = await searchMovie(movieName);
-        movie.backdrop = await getBackdrop(movie.Title, movie.Year);
+
+        const match = await getTMDBMatch(movie.Title, movie.Year);
+        movie.tmdbId = match ? match.id : null;
+        movie.backdrop = match ? match.backdrop_path : null;
+
+        const elapsed = Date.now() - start;
+        if (elapsed < 400) await new Promise(r => setTimeout(r, 400 - elapsed));
+
         hideLoading();
         renderMovie(movie);
     } catch (error) {
@@ -91,12 +106,19 @@ async function randomMovieHandler() {
     try {
         document.activeElement.blur();
         showLoading();
+        const start = Date.now();
+
         const genreID = genreSelect.value;
         const decade = decadeSelect.value;
         const randomMovie = await getRandomMovieByGenre(genreID, decade);
         const imdbID = await getIMDbID(randomMovie.id);
         movie = await getMovieByIMDb(imdbID);
+        movie.tmdbId = randomMovie.id;
         movie.backdrop = randomMovie.backdrop_path;
+
+        const elapsed = Date.now() - start;
+        if (elapsed < 400) await new Promise(r => setTimeout(r, 400 - elapsed));
+
         hideLoading();
         renderMovie(movie);
     }
@@ -110,9 +132,82 @@ function renderMovie(movie){
     showMoviePage();
     leftPoster.innerHTML = "";
     movieDetails(movie);
+    loadTrailer(movie);
+    loadWatchProviders(movie);
 }
 
+async function loadTrailer(movie) {
+    trailerBtn.classList.add("hidden");
+    if (!movie.tmdbId) return;
 
+    try {
+        const key = await getTrailerKey(movie.tmdbId);
+        if (key) {
+            trailerBtn.dataset.key = key;
+            trailerBtn.classList.remove("hidden");
+        }
+    } catch (e) { console.error(e); }
+}
+
+trailerBtn.addEventListener("click", () => {
+    trailerFrame.src = `https://www.youtube.com/embed/${trailerBtn.dataset.key}?autoplay=1`;
+    trailerModal.classList.remove("hidden");
+});
+
+closeTrailerBtn.addEventListener("click", () => {
+    trailerModal.classList.add("hidden");
+    trailerFrame.src = "";
+});
+
+async function loadWatchProviders(movie) {
+    watchGrid.innerHTML = "";
+    watchSection.classList.add("hidden");
+
+    if (!movie.tmdbId) return;
+
+    try {
+        const providers = await getWatchProviders(movie.tmdbId);
+        if (!providers) return;
+
+        const all = [
+            ...(providers.flatrate || []),
+            ...(providers.rent || []),
+            ...(providers.buy || [])
+        ];
+
+        const seen = new Set();
+        const unique = all.filter(p => {
+            if (seen.has(p.provider_id)) return false;
+            seen.add(p.provider_id);
+            return true;
+        });
+
+        if (!unique.length) return;
+
+        renderWatchProviders(unique, providers.link);
+        watchSection.classList.remove("hidden");
+    } catch (e) { console.error(e); }
+}
+
+function renderWatchProviders(providers, link) {
+    const icon = `
+        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+    `;
+
+    providers.forEach(p => {
+        const item = document.createElement(link ? "a" : "div");
+        if (link) {
+            item.href = link;
+            item.target = "_blank";
+            item.rel = "noopener";
+        }
+        item.classList.add("watch-provider");
+        item.innerHTML = `${icon}<span>${p.provider_name}</span>`;
+        watchGrid.appendChild(item);
+    });
+}
 
 function showLanding(){
     landingContainer.classList.remove("hidden");
@@ -174,5 +269,3 @@ function errorMsgDeletion(){
     if(errorMsg)
         errorMsg.remove();
 }
-
-

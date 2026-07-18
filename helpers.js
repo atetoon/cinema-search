@@ -6,7 +6,6 @@ const OMDB_API_KEY = "e3120137&t";
 const TMDB_BASE = "https://api.themoviedb.org/3";
 const OMDB_BASE = "https://www.omdbapi.com/";
 
-// FETCH JSON
 
 async function fetchJSON(url) {
     const response = await fetch(url);
@@ -21,8 +20,7 @@ async function fetchJSON(url) {
 
 async function getGenres() {
 
-    const url =
-        `${TMDB_BASE}/genre/movie/list?api_key=${TMDB_API_KEY}`;
+    const url = `${TMDB_BASE}/genre/movie/list?api_key=${TMDB_API_KEY}`;
 
     const data = await fetchJSON(url);
 
@@ -50,9 +48,9 @@ function populateGenres(genres) {
 
 }
 
-// BACKDROP GETTER
+// TMDB MOVIE MATCH (id + backdrop) BY TITLE/YEAR
 
-async function getBackdrop(title, year = "") {
+async function getTMDBMatch(title, year = "") {
 
     const url =
         `${TMDB_BASE}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(title)}&year=${year}`;
@@ -62,12 +60,13 @@ async function getBackdrop(title, year = "") {
     if (!data.results.length)
         return null;
 
-    return data.results[0].backdrop_path;
+    return data.results[0];
 }
 
-// random movie getter using TMBD
+// random movie getter using TMDB
 
 async function getRandomMovieByGenre(genreID, decade = "") {
+
     const page = Math.floor(Math.random() * 5) + 1;
 
     let dateFilter = "";
@@ -79,8 +78,16 @@ async function getRandomMovieByGenre(genreID, decade = "") {
         `${TMDB_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${genreID}&page=${page}&sort_by=popularity.desc&vote_count.gte=100${dateFilter}`;
 
     const data = await fetchJSON(url);
-    if (!data.results.length) throw new Error("No movies found.");
-    return data.results[Math.floor(Math.random() * data.results.length)];
+
+    if (!data.results.length) {
+        throw new Error("No movies found.");
+    }
+
+    const randomIndex =
+        Math.floor(Math.random() * data.results.length);
+
+    return data.results[randomIndex];
+
 }
 
 // TMDB movie details
@@ -102,6 +109,42 @@ async function getIMDbID(movieID) {
         await getTMDBMovie(movieID);
 
     return movie.imdb_id;
+
+}
+
+// trailer
+
+async function getTrailerKey(tmdbId) {
+
+    const url =
+        `${TMDB_BASE}/movie/${tmdbId}/videos?api_key=${TMDB_API_KEY}`;
+
+    const data = await fetchJSON(url);
+    const vids = data.results.filter(v => v.site === "YouTube");
+
+    if (!vids.length) return null;
+
+    const ranked = [
+        ...vids.filter(v => v.type === "Trailer" && v.official),
+        ...vids.filter(v => v.type === "Trailer" && !v.official),
+        ...vids.filter(v => v.type === "Teaser"),
+        ...vids
+    ];
+
+    return ranked[0].key;
+}
+
+// where to watch
+
+async function getWatchProviders(tmdbId) {
+
+    const url =
+        `${TMDB_BASE}/movie/${tmdbId}/watch/providers?api_key=${TMDB_API_KEY}`;
+
+    const data = await fetchJSON(url);
+    const results = data.results || {};
+
+    return results["IN"] || results["US"] || null;
 
 }
 
