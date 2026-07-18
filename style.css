@@ -409,9 +409,8 @@ input::placeholder{
 }
 
 
-
-#genreSelect{
-    flex: 1;
+#genreSelect,
+#decadeSelect{
     min-width: 0;
 
     background: #111111;
@@ -419,6 +418,7 @@ input::placeholder{
 
     border: .5px solid var(--color-border);
     outline: none;
+    -webkit-tap-highlight-color: transparent;
 
     padding: .85rem 1rem;
 
@@ -432,14 +432,17 @@ input::placeholder{
     transition: .25s;
 }
 
-    
-
-#genreSelect:hover{
-    border-color: rgba(201,185,154,.35);
+#genreSelect{
+    flex: 2;
 }
 
-#genreSelect:focus{
-    border-color: var(--color-gold);
+#decadeSelect{
+    flex: 0.5;
+}
+
+#genreSelect:hover,
+#decadeSelect:hover{
+    border-color: rgba(201,185,154,.35);
 }
 
 

@@ -67,24 +67,20 @@ async function getBackdrop(title, year = "") {
 
 // random movie getter using TMBD
 
-async function getRandomMovieByGenre(genreID) {
-
+async function getRandomMovieByGenre(genreID, decade = "") {
     const page = Math.floor(Math.random() * 5) + 1;
 
-    const url =
-        `${TMDB_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${genreID}&page=${page}&sort_by=popularity.desc&vote_count.gte=100`;
-
-    const data = await fetchJSON(url);
-
-    if (!data.results.length) {
-        throw new Error("No movies found.");
+    let dateFilter = "";
+    if (decade) {
+        dateFilter = `&primary_release_date.gte=${decade}-01-01&primary_release_date.lte=${+decade + 9}-12-31`;
     }
 
-    const randomIndex =
-        Math.floor(Math.random() * data.results.length);
+    const url =
+        `${TMDB_BASE}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${genreID}&page=${page}&sort_by=popularity.desc&vote_count.gte=100${dateFilter}`;
 
-    return data.results[randomIndex];
-
+    const data = await fetchJSON(url);
+    if (!data.results.length) throw new Error("No movies found.");
+    return data.results[Math.floor(Math.random() * data.results.length)];
 }
 
 // TMDB movie details

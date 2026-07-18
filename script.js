@@ -1,6 +1,7 @@
 let searchBar = document.querySelector(".searchBar");
 let searchBtn = document.querySelector("#searchBtn");
 let genreSelect = document.querySelector("#genreSelect");
+let decadeSelect = document.querySelector("#decadeSelect");
 let randomBtn = document.querySelector("#randomBtn");
 let backBtn = document.querySelector("#backBtn");
 let landingContainer = document.querySelector(".landing-container");
@@ -91,7 +92,8 @@ async function randomMovieHandler() {
         document.activeElement.blur();
         showLoading();
         const genreID = genreSelect.value;
-        const randomMovie = await getRandomMovieByGenre(genreID);
+        const decade = decadeSelect.value;
+        const randomMovie = await getRandomMovieByGenre(genreID, decade);
         const imdbID = await getIMDbID(randomMovie.id);
         movie = await getMovieByIMDb(imdbID);
         movie.backdrop = randomMovie.backdrop_path;
