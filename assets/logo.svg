@@ -1,0 +1,16 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="240" rx="40" fill="#0a0a0a"/>
+  <!-- film-reel ring forming a C -->
+  <path d="M120 40
+           a80 80 0 1 0 56.6 136.6"
+        fill="none" stroke="#f5f5f0" stroke-width="14" stroke-linecap="round"/>
+  <!-- sprocket holes along the ring -->
+  <circle cx="120" cy="40"  r="7" fill="#f5f5f0"/>
+  <circle cx="63"  cy="63"  r="7" fill="#f5f5f0"/>
+  <circle cx="40"  cy="120" r="7" fill="#f5f5f0"/>
+  <circle cx="63"  cy="177" r="7" fill="#f5f5f0"/>
+  <circle cx="120" cy="200" r="7" fill="#f5f5f0"/>
+  <circle cx="177" cy="177" r="7" fill="#f5f5f0"/>
+  <!-- play triangle nested inside -->
+  <path d="M104 92 L156 120 L104 148 Z" fill="#f5f5f0"/>
+</svg>
