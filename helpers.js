@@ -48,6 +48,18 @@ function populateGenres(genres) {
 
 }
 
+// TMDB SEARCH SUGGESTIONS (autocomplete)
+
+async function getMovieSuggestions(query) {
+
+    const url =
+        `${TMDB_BASE}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`;
+
+    const data = await fetchJSON(url);
+
+    return data.results.slice(0, 6);
+}
+
 // TMDB MOVIE MATCH (id + backdrop) BY TITLE/YEAR
 
 async function getTMDBMatch(title, year = "") {

@@ -1,4 +1,5 @@
 let searchBar = document.querySelector(".searchBar");
+let autocompleteList = document.querySelector("#autocompleteList");
 let searchBtn = document.querySelector("#searchBtn");
 let genreSelect = document.querySelector("#genreSelect");
 let decadeSelect = document.querySelector("#decadeSelect");
@@ -64,9 +65,129 @@ randomBtn.addEventListener("click", () => {
     randomMovieHandler();
 });
 
+let activeIndex = -1;
+
 searchBar.addEventListener("keydown", (e)=>{
-    if(e.key == "Enter"){
-       searchHandler();
+    const items = autocompleteList.querySelectorAll(".autocomplete-item");
+
+    if(!items.length || autocompleteList.classList.contains("hidden")){
+        if(e.key == "Enter"){
+            searchHandler();
+        }
+        return;
+    }
+
+    if(e.key == "ArrowDown"){
+        e.preventDefault();
+        activeIndex = (activeIndex + 1) % items.length;
+        highlightItem(items);
+    } else if(e.key == "ArrowUp"){
+        e.preventDefault();
+        activeIndex = (activeIndex - 1 + items.length) % items.length;
+        highlightItem(items);
+    } else if(e.key == "Enter"){
+        e.preventDefault();
+        if(activeIndex > -1){
+            items[activeIndex].click();
+        } else {
+            searchHandler();
+            hideAutocomplete();
+        }
+    } else if(e.key == "Escape"){
+        hideAutocomplete();
+    }
+});
+
+function highlightItem(items){
+    items.forEach(item => item.classList.remove("active"));
+    if(activeIndex > -1){
+        items[activeIndex].classList.add("active");
+        items[activeIndex].scrollIntoView({ block: "nearest" });
+    }
+}
+
+let debounceTimer;
+searchBar.addEventListener("input", () => {
+    clearTimeout(debounceTimer);
+    const query = searchBar.value.trim();
+
+    if(query.length < 2){
+        hideAutocomplete();
+        return;
+    }
+
+    debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
+});
+
+async function fetchSuggestions(query){
+    try{
+        const results = await getMovieSuggestions(query);
+        renderAutocomplete(results);
+    } catch(error){
+        hideAutocomplete();
+    }
+}
+
+function renderAutocomplete(results){
+    autocompleteList.innerHTML = "";
+    activeIndex = -1;
+
+    if(!results.length){
+        hideAutocomplete();
+        return;
+    }
+
+    results.forEach(movie => {
+        const item = document.createElement("div");
+        item.classList.add("autocomplete-item");
+        const year = movie.release_date ? movie.release_date.slice(0,4) : "";
+        item.innerText = year ? `${movie.title} (${year})` : movie.title;
+
+        item.addEventListener("click", () => {
+            hideAutocomplete();
+            selectSuggestion(movie);
+        });
+
+        autocompleteList.appendChild(item);
+    });
+
+    autocompleteList.classList.remove("hidden");
+}
+
+async function selectSuggestion(tmdbMovie){
+    try {
+        document.activeElement.blur();
+        errorMsgDeletion();
+        searchBar.value = tmdbMovie.title;
+        showLoading();
+        const start = Date.now();
+
+        const imdbID = await getIMDbID(tmdbMovie.id);
+        movie = await getMovieByIMDb(imdbID);
+        movie.tmdbId = tmdbMovie.id;
+        movie.backdrop = tmdbMovie.backdrop_path;
+
+        const elapsed = Date.now() - start;
+        if (elapsed < 400) await new Promise(r => setTimeout(r, 400 - elapsed));
+
+        hideLoading();
+        renderMovie(movie);
+    } catch (error) {
+        hideLoading();
+        errorMsgFunc();
+        showLanding();
+    }
+}
+
+function hideAutocomplete(){
+    autocompleteList.classList.add("hidden");
+    autocompleteList.innerHTML = "";
+    activeIndex = -1;
+}
+
+document.addEventListener("click", (e) => {
+    if(!searchBar.contains(e.target) && !autocompleteList.contains(e.target)){
+        hideAutocomplete();
     }
 });
 
